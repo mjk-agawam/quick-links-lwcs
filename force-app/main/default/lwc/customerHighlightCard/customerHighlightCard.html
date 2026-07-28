@@ -1,0 +1,60 @@
+<template>
+    <div class="highlight-card">
+        <div class="background-container">
+            <img src={backgroundImage} alt="" class="background-image" />
+            <div class="background-overlay"></div>
+        </div>
+
+        <template if:true={showNoContactMessage}>
+            <div class="content-container">
+                <p class="no-contact-message">No Contact ID on this record. Use a different header</p>
+            </div>
+        </template>
+
+        <template if:false={showNoContactMessage}>
+            <div class="content-container">
+                <div class="avatar-container">
+                    <img src={contactPhotoUrl} alt={contactName} class="avatar" />
+                    <lightning-icon
+                        if:true={showStatusIcon}
+                        icon-name="utility:success"
+                        alternative-text="Active"
+                        size="x-small"
+                        class="status-icon">
+                    </lightning-icon>
+                </div>
+
+                <div class="info-container">
+                    <div class="info-line-1">
+                        <a href={contactUrl} class="contact-name">{contactName}</a>
+                        <template if:true={phone}>
+                            <span class="separator">|</span>
+                            <span class="label">Phone:</span>
+                            <a href={phoneLink} class="value-link">{phone}</a>
+                        </template>
+                        <template if:true={mobile}>
+                            <span class="separator">|</span>
+                            <span class="label">Mobile:</span>
+                            <a href={mobileLink} class="value-link">{mobile}</a>
+                        </template>
+                        <template if:true={accountName}>
+                            <span class="separator">|</span>
+                            <span class="label">Account:</span>
+                            <a href={accountUrl} class="value-link">{accountName}</a>
+                        </template>
+                        <template if:true={title}>
+                            <span class="separator">|</span>
+                            <span class="label">Title:</span>
+                            <span class="value">{title}</span>
+                        </template>
+                    </div>
+                    <div class="info-line-2">
+                        <template if:true={email}>
+                            <a href={emailLink} class="email-link">{email}</a>
+                        </template>
+                    </div>
+                </div>
+            </div>
+        </template>
+    </div>
+</template>

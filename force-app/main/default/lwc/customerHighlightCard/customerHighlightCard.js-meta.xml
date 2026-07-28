@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>Customer Highlight Card</masterLabel>
+    <description>Display customer or contact information with a branded background banner</description>
+    <targets>
+        <target>lightning__RecordPage</target>
+        <target>lightning__AppPage</target>
+        <target>lightning__HomePage</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__RecordPage">
+            <objects>
+                <object>Contact</object>
+                <object>Case</object>
+                <object>WorkOrder</object>
+                <object>ServiceAppointment</object>
+            </objects>
+            <property name="showStatusIcon" type="Boolean" default="true" label="Show Status Icon" description="Display the green checkmark status indicator"/>
+            <property name="backgroundImageName" type="String" default="SDO_Service_TrailheadSunBG" label="Background Image Resource Name" description="Name of the static resource for the background (without /resource/ prefix)"/>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>
