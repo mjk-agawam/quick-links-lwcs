@@ -20,10 +20,15 @@ const RELATED_LISTS = [
 
 export default class SaQuickLink extends NavigationMixin(LightningElement) {
     @api recordId;
+    @api columns = '1';
 
     isLoading = true;
     rows = [];
     _data = null;
+
+    get gridClass() {
+        return Number(this.columns) === 2 ? 'quick-link-grid two-col' : 'quick-link-grid';
+    }
 
     @wire(getCounts, { workOrderId: '$recordId' })
     wiredCounts({ error, data }) {

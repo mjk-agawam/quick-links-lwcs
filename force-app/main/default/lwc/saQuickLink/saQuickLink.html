@@ -5,12 +5,14 @@
                 <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
             </template>
             <template if:false={isLoading}>
-                <template for:each={rows} for:item="row">
-                    <div key={row.label} class="quick-link-row" onclick={row.handler}>
-                        <span class="quick-link-label">{row.label}</span>
-                        <span class="quick-link-count">{row.count}</span>
-                    </div>
-                </template>
+                <div class={gridClass}>
+                    <template for:each={rows} for:item="row">
+                        <div key={row.label} class="quick-link-row" onclick={row.handler}>
+                            <span class="quick-link-label">{row.label}</span>
+                            <span class="quick-link-count">{row.count}</span>
+                        </div>
+                    </template>
+                </div>
             </template>
         </div>
     </lightning-card>

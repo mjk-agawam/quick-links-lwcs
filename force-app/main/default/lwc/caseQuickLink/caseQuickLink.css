@@ -1,3 +1,12 @@
+.quick-link-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+}
+
+.quick-link-grid.two-col {
+    grid-template-columns: 1fr 1fr;
+}
+
 .quick-link-row {
     display: flex;
     justify-content: space-between;
