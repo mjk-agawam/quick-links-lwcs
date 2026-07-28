@@ -36,9 +36,29 @@ export default class CaseQuickLink extends NavigationMixin(LightningElement) {
         const built = [];
 
         built.push({
-            label: 'Work Orders',
-            count: d.workOrderCount,
-            handler: () => this._goToRelatedList('WorkOrders')
+            label: 'Account',
+            count: d.accountCount,
+            handler: () => {
+                if (d.accountId) {
+                    this[NavigationMixin.Navigate]({
+                        type: 'standard__recordPage',
+                        attributes: { recordId: d.accountId, actionName: 'view' }
+                    });
+                }
+            }
+        });
+
+        built.push({
+            label: 'Contact',
+            count: d.contactCount,
+            handler: () => {
+                if (d.contactId) {
+                    this[NavigationMixin.Navigate]({
+                        type: 'standard__recordPage',
+                        attributes: { recordId: d.contactId, actionName: 'view' }
+                    });
+                }
+            }
         });
 
         built.push({
@@ -52,6 +72,18 @@ export default class CaseQuickLink extends NavigationMixin(LightningElement) {
                     });
                 }
             }
+        });
+
+        built.push({
+            label: 'Work Orders',
+            count: d.workOrderCount,
+            handler: () => this._goToRelatedList('WorkOrders')
+        });
+
+        built.push({
+            label: 'Knowledge Articles',
+            count: d.knowledgeCount || 0,
+            handler: () => this._goToRelatedList('CaseArticles')
         });
 
         for (const item of RELATED_LISTS) {
