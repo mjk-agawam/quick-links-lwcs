@@ -1,0 +1,26 @@
+.quick-link-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    padding: 0.35rem 0.5rem;
+    border-radius: 0.25rem;
+}
+
+.quick-link-row:hover {
+    background-color: #f3f3f3;
+}
+
+.quick-link-label {
+    font-size: 0.75rem;
+    color: #3e3e3c;
+    line-height: 1.5;
+}
+
+.quick-link-count {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #3e3e3c;
+    min-width: 1.5rem;
+    text-align: right;
+}
