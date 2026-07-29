@@ -1,0 +1,19 @@
+<template>
+    <lightning-card title="Related List Quick Links">
+        <div class="slds-var-p-horizontal_medium slds-var-p-bottom_small">
+            <template if:true={isLoading}>
+                <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
+            </template>
+            <template if:false={isLoading}>
+                <div class={gridClass}>
+                    <template for:each={rows} for:item="row">
+                        <div key={row.label} class="quick-link-row" onclick={row.handler}>
+                            <span class="quick-link-label">{row.label}</span>
+                            <span class="quick-link-count">{row.count}</span>
+                        </div>
+                    </template>
+                </div>
+            </template>
+        </div>
+    </lightning-card>
+</template>
