@@ -74,6 +74,19 @@ export default class SaQuickLink extends NavigationMixin(LightningElement) {
             }
         });
 
+        built.push({
+            label: 'Case',
+            count: d.caseId ? 1 : 0,
+            handler: () => {
+                if (d.caseId) {
+                    this[NavigationMixin.Navigate]({
+                        type: 'standard__recordPage',
+                        attributes: { recordId: d.caseId, actionName: 'view' }
+                    });
+                }
+            }
+        });
+
         for (const item of RELATED_LISTS) {
             const rel = item.rel;
             built.push({

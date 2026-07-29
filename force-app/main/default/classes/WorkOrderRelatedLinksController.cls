@@ -4,9 +4,10 @@ public with sharing class WorkOrderRelatedLinksController {
     public static Map<String, Object> getCounts(Id workOrderId) {
         Map<String, Object> result = new Map<String, Object>();
 
-        WorkOrder wo = [SELECT AssetId FROM WorkOrder WHERE Id = :workOrderId LIMIT 1];
+        WorkOrder wo = [SELECT AssetId, CaseId FROM WorkOrder WHERE Id = :workOrderId LIMIT 1];
         result.put('assetId', wo.AssetId != null ? (String)wo.AssetId : null);
         result.put('assetCount', wo.AssetId != null ? 1 : 0);
+        result.put('caseId', wo.CaseId != null ? (String)wo.CaseId : null);
 
         List<ServiceAppointment> sas = [SELECT Id FROM ServiceAppointment WHERE ParentRecordId = :workOrderId];
         result.put('serviceAppointmentCount', sas.size());
