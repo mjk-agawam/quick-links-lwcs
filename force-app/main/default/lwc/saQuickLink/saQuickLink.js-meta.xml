@@ -7,6 +7,9 @@
     </targets>
     <targetConfigs>
         <targetConfig targets="lightning__RecordPage">
+            <objects>
+                <object>WorkOrder</object>
+            </objects>
             <property name="recordId" type="String" label="Record Id" />
             <property name="columns" type="String" label="Columns" default="1" datasource="1,2" />
         </targetConfig>
