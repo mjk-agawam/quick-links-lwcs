@@ -9,6 +9,7 @@ const RELATED_LISTS = [
     { label: 'Work Plans',             key: 'workPlanCount',           rel: 'WorkPlans' },
     { label: 'Work Steps',             key: 'workStepCount',           rel: null },
     { label: 'Skill Requirements',     key: 'skillRequirementCount',   rel: 'SkillRequirements' },
+    { label: 'Preferred Resources',    key: 'preferredResourceCount',  rel: 'ResourcePreferences' },
     { label: 'Open Activities',        key: 'openActivityCount',       rel: 'OpenActivities' },
     { label: 'Activity History',       key: 'activityHistoryCount',    rel: 'ActivityHistories' },
     { label: 'Tasks',                  key: 'taskCount',               rel: 'Tasks' },

@@ -31,6 +31,12 @@ public with sharing class WorkOrderRelatedLinksController {
             result.put('skillRequirementCount', 0);
         }
 
+        try {
+            result.put('preferredResourceCount', [SELECT COUNT() FROM ResourcePreference WHERE RelatedRecordId = :workOrderId AND PreferenceType = 'Preferred']);
+        } catch (Exception e) {
+            result.put('preferredResourceCount', 0);
+        }
+
         result.put('openActivityCount',    [SELECT COUNT() FROM Task WHERE WhatId = :workOrderId AND IsClosed = false]);
         result.put('activityHistoryCount', [SELECT COUNT() FROM Task WHERE WhatId = :workOrderId AND IsClosed = true]);
         result.put('taskCount',            [SELECT COUNT() FROM Task WHERE WhatId = :workOrderId]);
