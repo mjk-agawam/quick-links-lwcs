@@ -2,10 +2,51 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>61.0</apiVersion>
     <assignments>
-        <name>Set_SA_Address</name>
-        <label>Set SA Address</label>
-        <locationX>176</locationX>
-        <locationY>600</locationY>
+        <name>Set_SA_Address_Shipping</name>
+        <label>Set SA Address (Shipping)</label>
+        <locationX>0</locationX>
+        <locationY>720</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Street</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>varAccount.ShippingStreet</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.City</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>varAccount.ShippingCity</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.State</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>varAccount.ShippingState</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.PostalCode</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>varAccount.ShippingPostalCode</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Country</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>varAccount.ShippingCountry</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Set_SA_Address_Billing</name>
+        <label>Set SA Address (Billing)</label>
+        <locationX>352</locationX>
+        <locationY>720</locationY>
         <assignmentItems>
             <assignToReference>$Record.Street</assignToReference>
             <operator>Assign</operator>
@@ -65,13 +106,28 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Has_BillingStreet</name>
-        <label>Has Billing Street?</label>
+        <name>Has_Shipping_Or_Billing</name>
+        <label>Has Shipping or Billing Street?</label>
         <locationX>176</locationX>
         <locationY>480</locationY>
         <defaultConnectorLabel>No Address — Stop</defaultConnectorLabel>
         <rules>
-            <name>Has_BillingStreet_Yes</name>
+            <name>Has_ShippingStreet</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>varAccount.ShippingStreet</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_SA_Address_Shipping</targetReference>
+            </connector>
+            <label>Has Shipping Street</label>
+        </rules>
+        <rules>
+            <name>Has_BillingStreet</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>varAccount.BillingStreet</leftValueReference>
@@ -81,12 +137,12 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Set_SA_Address</targetReference>
+                <targetReference>Set_SA_Address_Billing</targetReference>
             </connector>
-            <label>Yes</label>
+            <label>Has Billing Street (fallback)</label>
         </rules>
     </decisions>
-    <description>Before-save flow on ServiceAppointment (Create). If the SA has no Street address, looks up the parent WorkOrder → Account and copies the billing address to the SA.</description>
+    <description>Before-save flow on ServiceAppointment (Create). If the SA has no Street address, looks up the parent WorkOrder → Account and copies the shipping address (preferred) or billing address (fallback) to the SA.</description>
     <interviewLabel>SA Copy Address From Account {!$Flow.CurrentDateTime}</interviewLabel>
     <label>SA - Copy Address From Account</label>
     <processMetadataValues>
@@ -126,7 +182,7 @@
         <locationY>360</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Has_BillingStreet</targetReference>
+            <targetReference>Has_Shipping_Or_Billing</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -140,6 +196,11 @@
         <object>Account</object>
         <outputReference>varAccount</outputReference>
         <queriedFields>Id</queriedFields>
+        <queriedFields>ShippingStreet</queriedFields>
+        <queriedFields>ShippingCity</queriedFields>
+        <queriedFields>ShippingState</queriedFields>
+        <queriedFields>ShippingPostalCode</queriedFields>
+        <queriedFields>ShippingCountry</queriedFields>
         <queriedFields>BillingStreet</queriedFields>
         <queriedFields>BillingCity</queriedFields>
         <queriedFields>BillingState</queriedFields>
