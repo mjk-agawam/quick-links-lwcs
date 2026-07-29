@@ -3,9 +3,9 @@ import { NavigationMixin } from 'lightning/navigation';
 import getCounts from '@salesforce/apex/SARelatedLinksController.getCounts';
 
 const RELATED_LISTS = [
-    { label: 'Assigned Resources',    key: 'assignedResourceCount',   rel: 'AssignedResources' },
-    { label: 'Skill Requirements',    key: 'skillRequirementCount',   rel: 'SkillRequirements' },
-    { label: 'Preferred Resources',   key: 'preferredResourceCount',  rel: 'ResourcePreferences' },
+    { label: 'Assigned Resources',    key: 'assignedResourceCount',   rel: 'ServiceResources' },
+    { label: 'Skill Requirements',    key: 'skillRequirementCount',   rel: null },
+    { label: 'Preferred Resources',   key: 'preferredResourceCount',  rel: null },
     { label: 'Service Reports',       key: 'serviceReportCount',      rel: 'ServiceReports' },
     { label: 'Open Activities',       key: 'openActivityCount',       rel: 'OpenActivities' },
     { label: 'Activity History',      key: 'activityHistoryCount',    rel: 'ActivityHistories' },
