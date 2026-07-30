@@ -53,7 +53,7 @@ public with sharing class WorkOrderRelatedLinksController {
         result.put('noteCount',       [SELECT COUNT() FROM Note WHERE ParentId = :workOrderId]);
 
         try {
-            result.put('formCount', [SELECT COUNT() FROM DynamicDataCapture WHERE ParentRecordId = :workOrderId]);
+            result.put('formCount', Database.countQuery('SELECT COUNT() FROM DynamicDataCapture WHERE ParentRecordId = \'' + workOrderId + '\''));
         } catch (Exception e) {
             result.put('formCount', 0);
         }
