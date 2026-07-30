@@ -181,6 +181,24 @@
                 <elementReference>$Record.Service_Territory__c</elementReference>
             </value>
         </inputParameters>
+        <inputParameters>
+            <name>crewRequiredLoadIn</name>
+            <value>
+                <elementReference>$Record.Crew_Required_LoadIn__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>crewRequiredShowDay</name>
+            <value>
+                <elementReference>$Record.Crew_Required_ShowDay__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>crewRequiredLoadOut</name>
+            <value>
+                <elementReference>$Record.Crew_Required_LoadOut__c</elementReference>
+            </value>
+        </inputParameters>
     </actionCalls>
 
     <!-- ── Variables ── -->

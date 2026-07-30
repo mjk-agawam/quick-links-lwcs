@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>61.0</apiVersion>
+    <description>Sends a crew call sheet email to all assigned resources on a Service Appointment.</description>
+    <interviewLabel>SA - Send Crew Call Sheet {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>SA - Send Crew Call Sheet</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+
+    <actionCalls>
+        <name>Send_Call_Sheet</name>
+        <label>Send Call Sheet</label>
+        <locationX>50</locationX>
+        <locationY>240</locationY>
+        <actionName>CrewCallSheetSender</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Success_Screen</targetReference>
+        </connector>
+        <inputParameters>
+            <name>serviceAppointmentId</name>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+
+    <screens>
+        <name>Confirm_Screen</name>
+        <label>Send Crew Call Sheet</label>
+        <locationX>50</locationX>
+        <locationY>120</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Send_Call_Sheet</targetReference>
+        </connector>
+        <fields>
+            <name>Confirm_Text</name>
+            <fieldText>&lt;p&gt;&lt;b&gt;Send Crew Call Sheet&lt;/b&gt;&lt;/p&gt;&lt;p&gt;This will email a call sheet to all assigned crew members for this appointment. Click &lt;b&gt;Send Call Sheet&lt;/b&gt; to continue.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <nextOrFinishButtonLabel>Send Call Sheet</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+
+    <screens>
+        <name>Success_Screen</name>
+        <label>Call Sheet Sent</label>
+        <locationX>50</locationX>
+        <locationY>360</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Success_Text</name>
+            <fieldText>&lt;p&gt;Crew call sheet sent successfully to all assigned crew members.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Confirm_Screen</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+
+    <variables>
+        <name>recordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>
