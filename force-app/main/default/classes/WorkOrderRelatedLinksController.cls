@@ -52,6 +52,12 @@ public with sharing class WorkOrderRelatedLinksController {
         result.put('attachmentCount', [SELECT COUNT() FROM Attachment WHERE ParentId = :workOrderId]);
         result.put('noteCount',       [SELECT COUNT() FROM Note WHERE ParentId = :workOrderId]);
 
+        try {
+            result.put('formCount', [SELECT COUNT() FROM DynamicDataCapture WHERE ParentRecordId = :workOrderId]);
+        } catch (Exception e) {
+            result.put('formCount', 0);
+        }
+
         return result;
     }
 }

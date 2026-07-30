@@ -17,9 +17,10 @@ const RELATED_LISTS = [
     { label: 'Files',                  key: 'fileCount',               rel: 'CombinedAttachments' },
     { label: 'Attachments',            key: 'attachmentCount',         rel: 'Attachments' },
     { label: 'Notes',                  key: 'noteCount',               rel: 'Notes' },
+    { label: 'Forms',                  key: 'formCount',               rel: 'DynamicDataCapture' },
 ];
 
-export default class SaQuickLink extends NavigationMixin(LightningElement) {
+export default class WorkOrderQuickLink extends NavigationMixin(LightningElement) {
     @api recordId;
     @api columns = '1';
 
