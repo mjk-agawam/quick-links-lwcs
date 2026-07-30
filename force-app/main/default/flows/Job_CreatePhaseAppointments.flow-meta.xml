@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>61.0</apiVersion>
-    <description>Auto-creates Load-In, Show Day, and Load-Out Service Appointments when a Job is created.</description>
+    <description>Auto-creates Load-In, one Show Day per calendar day, and Load-Out Service Appointments when a Job is created.</description>
     <label>Job - Create Phase Appointments</label>
     <processMetadataValues>
         <name>BuilderType</name>
@@ -113,227 +113,75 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Create_LoadIn_SA</targetReference>
+                <targetReference>Create_Phase_Appointments</targetReference>
             </connector>
             <label>Account is set</label>
         </rules>
     </decisions>
 
-    <!-- ── Create Load-In SA ── -->
-    <recordCreates>
-        <name>Create_LoadIn_SA</name>
-        <label>Create Load-In SA</label>
+    <!-- ── Apex Action: create all SAs ── -->
+    <actionCalls>
+        <name>Create_Phase_Appointments</name>
+        <label>Create Phase Appointments</label>
         <locationX>50</locationX>
-        <locationY>560</locationY>
-        <connector>
-            <targetReference>Create_ShowDay_SA</targetReference>
-        </connector>
-        <inputAssignments>
-            <field>Subject</field>
+        <locationY>540</locationY>
+        <actionName>JobPhaseAppointmentCreator</actionName>
+        <actionType>apex</actionType>
+        <inputParameters>
+            <name>jobId</name>
             <value>
-                <elementReference>frmSubject_LoadIn</elementReference>
+                <elementReference>$Record.Id</elementReference>
             </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>EarliestStartTime</field>
+        </inputParameters>
+        <inputParameters>
+            <name>eventName</name>
             <value>
-                <elementReference>frmLoadInStart</elementReference>
+                <elementReference>$Record.Event_Name__c</elementReference>
             </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>DueDate</field>
+        </inputParameters>
+        <inputParameters>
+            <name>startDate</name>
             <value>
-                <elementReference>frmLoadInEnd</elementReference>
+                <elementReference>$Record.Event_Start_Date__c</elementReference>
             </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Duration</field>
+        </inputParameters>
+        <inputParameters>
+            <name>endDate</name>
             <value>
-                <numberValue>480.0</numberValue>
+                <elementReference>$Record.Event_End_Date__c</elementReference>
             </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>DurationType</field>
-            <value>
-                <stringValue>Minutes</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>WorkTypeId</field>
+        </inputParameters>
+        <inputParameters>
+            <name>workTypeLoadIn</name>
             <value>
                 <elementReference>varWorkType_LoadIn.Id</elementReference>
             </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>ServiceTerritoryId</field>
-            <value>
-                <elementReference>$Record.Service_Territory__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>ParentRecordId</field>
-            <value>
-                <elementReference>$Record.Account__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Job__c</field>
-            <value>
-                <elementReference>$Record.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Status</field>
-            <value>
-                <stringValue>None</stringValue>
-            </value>
-        </inputAssignments>
-        <object>ServiceAppointment</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordCreates>
-
-    <!-- ── Create Show Day SA ── -->
-    <recordCreates>
-        <name>Create_ShowDay_SA</name>
-        <label>Create Show Day SA</label>
-        <locationX>50</locationX>
-        <locationY>680</locationY>
-        <connector>
-            <targetReference>Create_LoadOut_SA</targetReference>
-        </connector>
-        <inputAssignments>
-            <field>Subject</field>
-            <value>
-                <elementReference>frmSubject_ShowDay</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>EarliestStartTime</field>
-            <value>
-                <elementReference>frmShowDayStart</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>DueDate</field>
-            <value>
-                <elementReference>frmShowDayEnd</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Duration</field>
-            <value>
-                <numberValue>480.0</numberValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>DurationType</field>
-            <value>
-                <stringValue>Minutes</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>WorkTypeId</field>
+        </inputParameters>
+        <inputParameters>
+            <name>workTypeShowDay</name>
             <value>
                 <elementReference>varWorkType_ShowDay.Id</elementReference>
             </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>ServiceTerritoryId</field>
-            <value>
-                <elementReference>$Record.Service_Territory__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>ParentRecordId</field>
-            <value>
-                <elementReference>$Record.Account__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Job__c</field>
-            <value>
-                <elementReference>$Record.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Status</field>
-            <value>
-                <stringValue>None</stringValue>
-            </value>
-        </inputAssignments>
-        <object>ServiceAppointment</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordCreates>
-
-    <!-- ── Create Load-Out SA ── -->
-    <recordCreates>
-        <name>Create_LoadOut_SA</name>
-        <label>Create Load-Out SA</label>
-        <locationX>50</locationX>
-        <locationY>800</locationY>
-        <inputAssignments>
-            <field>Subject</field>
-            <value>
-                <elementReference>frmSubject_LoadOut</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>EarliestStartTime</field>
-            <value>
-                <elementReference>frmLoadOutStart</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>DueDate</field>
-            <value>
-                <elementReference>frmLoadOutEnd</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Duration</field>
-            <value>
-                <numberValue>480.0</numberValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>DurationType</field>
-            <value>
-                <stringValue>Minutes</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>WorkTypeId</field>
+        </inputParameters>
+        <inputParameters>
+            <name>workTypeLoadOut</name>
             <value>
                 <elementReference>varWorkType_LoadOut.Id</elementReference>
             </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>ServiceTerritoryId</field>
-            <value>
-                <elementReference>$Record.Service_Territory__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>ParentRecordId</field>
+        </inputParameters>
+        <inputParameters>
+            <name>accountId</name>
             <value>
                 <elementReference>$Record.Account__c</elementReference>
             </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Job__c</field>
+        </inputParameters>
+        <inputParameters>
+            <name>territoryId</name>
             <value>
-                <elementReference>$Record.Id</elementReference>
+                <elementReference>$Record.Service_Territory__c</elementReference>
             </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Status</field>
-            <value>
-                <stringValue>None</stringValue>
-            </value>
-        </inputAssignments>
-        <object>ServiceAppointment</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordCreates>
+        </inputParameters>
+    </actionCalls>
 
     <!-- ── Variables ── -->
     <variables>
@@ -360,51 +208,4 @@
         <isOutput>false</isOutput>
         <objectType>WorkType</objectType>
     </variables>
-
-    <!-- ── Formulas ── -->
-    <formulas>
-        <name>frmSubject_LoadIn</name>
-        <dataType>String</dataType>
-        <expression>{!$Record.Event_Name__c} &amp; " - Load-In"</expression>
-    </formulas>
-    <formulas>
-        <name>frmSubject_ShowDay</name>
-        <dataType>String</dataType>
-        <expression>{!$Record.Event_Name__c} &amp; " - Show Day"</expression>
-    </formulas>
-    <formulas>
-        <name>frmSubject_LoadOut</name>
-        <dataType>String</dataType>
-        <expression>{!$Record.Event_Name__c} &amp; " - Load-Out"</expression>
-    </formulas>
-    <formulas>
-        <name>frmLoadInStart</name>
-        <dataType>DateTime</dataType>
-        <expression>DATETIMEVALUE(TEXT({!$Record.Event_Start_Date__c}) &amp; " 13:00:00")</expression>
-    </formulas>
-    <formulas>
-        <name>frmLoadInEnd</name>
-        <dataType>DateTime</dataType>
-        <expression>DATETIMEVALUE(TEXT({!$Record.Event_Start_Date__c}) &amp; " 21:00:00")</expression>
-    </formulas>
-    <formulas>
-        <name>frmShowDayStart</name>
-        <dataType>DateTime</dataType>
-        <expression>DATETIMEVALUE(TEXT({!$Record.Event_Start_Date__c} + 1) &amp; " 13:00:00")</expression>
-    </formulas>
-    <formulas>
-        <name>frmShowDayEnd</name>
-        <dataType>DateTime</dataType>
-        <expression>DATETIMEVALUE(TEXT({!$Record.Event_Start_Date__c} + 1) &amp; " 21:00:00")</expression>
-    </formulas>
-    <formulas>
-        <name>frmLoadOutStart</name>
-        <dataType>DateTime</dataType>
-        <expression>DATETIMEVALUE(TEXT({!$Record.Event_End_Date__c}) &amp; " 13:00:00")</expression>
-    </formulas>
-    <formulas>
-        <name>frmLoadOutEnd</name>
-        <dataType>DateTime</dataType>
-        <expression>DATETIMEVALUE(TEXT({!$Record.Event_End_Date__c}) &amp; " 21:00:00")</expression>
-    </formulas>
 </Flow>
