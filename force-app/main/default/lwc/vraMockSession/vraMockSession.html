@@ -1,0 +1,71 @@
+<template>
+    <div class="vra-shell">
+
+        <!-- Connecting state -->
+        <template lwc:if={isConnecting}>
+            <div class="vra-connecting">
+                <div class="vra-avatar vra-avatar_pulse">{expert.initials}</div>
+                <div class="vra-connecting-text">Connecting to expert&hellip;</div>
+                <lightning-spinner alternative-text="Connecting" size="medium"
+                                   variant="inverse"></lightning-spinner>
+                <div class="vra-connecting-sub">Visual Remote Assistant</div>
+            </div>
+        </template>
+
+        <!-- Connected (live session) state -->
+        <template lwc:if={isConnected}>
+            <div class="vra-live">
+
+                <div class="vra-video">
+                    <div class="vra-live-badge">
+                        <span class="vra-live-dot"></span>LIVE
+                    </div>
+
+                    <div class="vra-remote">
+                        <div class="vra-avatar">{expert.initials}</div>
+                        <div class="vra-remote-name">{expert.name}</div>
+                        <div class="vra-remote-title">{expert.title}</div>
+                    </div>
+
+                    <div class="vra-selfview">
+                        <template lwc:if={cameraOff}>
+                            <lightning-icon icon-name="utility:turn_off_camera"
+                                            size="small" variant="inverse"></lightning-icon>
+                        </template>
+                        <template lwc:else>
+                            <span class="vra-selfview-label">You</span>
+                        </template>
+                    </div>
+                </div>
+
+                <div class="vra-context">
+                    <div class="vra-context-label">Sharing session on</div>
+                    <div class="vra-context-wo">{workOrderNumber}</div>
+                    <div class="vra-context-subject">{workOrderSubject}</div>
+                </div>
+
+                <div class="vra-controls">
+                    <button class="vra-ctrl" onclick={toggleMute} title={muteLabel}>
+                        <lightning-icon icon-name={muteIcon} size="small"
+                                        variant="inverse"></lightning-icon>
+                        <span class="vra-ctrl-label">{muteLabel}</span>
+                    </button>
+
+                    <button class="vra-ctrl" onclick={toggleCamera} title={cameraLabel}>
+                        <lightning-icon icon-name={cameraIcon} size="small"
+                                        variant="inverse"></lightning-icon>
+                        <span class="vra-ctrl-label">{cameraLabel}</span>
+                    </button>
+
+                    <button class="vra-ctrl vra-ctrl_end" onclick={handleEnd} title="End">
+                        <lightning-icon icon-name="utility:end_call" size="small"
+                                        variant="inverse"></lightning-icon>
+                        <span class="vra-ctrl-label">End</span>
+                    </button>
+                </div>
+
+            </div>
+        </template>
+
+    </div>
+</template>

@@ -1,0 +1,198 @@
+.vra-shell {
+    min-height: 100%;
+    background: #0b1420;
+    color: #ffffff;
+}
+
+/* --- Connecting --- */
+.vra-connecting {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.25rem;
+    padding: 4rem 1.5rem;
+    min-height: 70vh;
+}
+
+.vra-connecting-text {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.vra-connecting-sub {
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #9fb0c3;
+}
+
+/* --- Avatar --- */
+.vra-avatar {
+    width: 88px;
+    height: 88px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #2a7ab0, #803abe);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+}
+
+.vra-avatar_pulse {
+    animation: vra-pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes vra-pulse {
+    0%   { box-shadow: 0 0 0 0 rgba(128, 58, 190, 0.55); }
+    70%  { box-shadow: 0 0 0 22px rgba(128, 58, 190, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(128, 58, 190, 0); }
+}
+
+/* --- Live session --- */
+.vra-live {
+    display: flex;
+    flex-direction: column;
+    min-height: 70vh;
+}
+
+.vra-video {
+    position: relative;
+    flex: 1 1 auto;
+    background:
+        radial-gradient(circle at 30% 20%, rgba(42, 122, 176, 0.35), transparent 55%),
+        radial-gradient(circle at 75% 80%, rgba(128, 58, 190, 0.35), transparent 55%),
+        #10202f;
+    min-height: 340px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.vra-live-badge {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: rgba(0, 0, 0, 0.45);
+    padding: 0.25rem 0.6rem;
+    border-radius: 1rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+}
+
+.vra-live-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #ff4b4b;
+    animation: vra-blink 1.2s ease-in-out infinite;
+}
+
+@keyframes vra-blink {
+    0%, 100% { opacity: 1; }
+    50%      { opacity: 0.25; }
+}
+
+.vra-remote {
+    text-align: center;
+}
+
+.vra-remote-name {
+    margin-top: 0.75rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.vra-remote-title {
+    font-size: 0.8rem;
+    color: #9fb0c3;
+}
+
+.vra-selfview {
+    position: absolute;
+    right: 1rem;
+    bottom: 1rem;
+    width: 84px;
+    height: 112px;
+    border-radius: 0.5rem;
+    background: #1c2b3a;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.vra-selfview-label {
+    font-size: 0.75rem;
+    color: #9fb0c3;
+}
+
+/* --- Context strip --- */
+.vra-context {
+    padding: 0.9rem 1.25rem;
+    background: #0e1a27;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.vra-context-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #7f93a8;
+}
+
+.vra-context-wo {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.vra-context-subject {
+    font-size: 0.85rem;
+    color: #c4d1de;
+}
+
+/* --- Controls --- */
+.vra-controls {
+    display: flex;
+    justify-content: space-around;
+    gap: 0.5rem;
+    padding: 1.1rem 1rem 1.6rem;
+    background: #0b1420;
+}
+
+.vra-ctrl {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+    background: rgba(255, 255, 255, 0.08);
+    border: none;
+    border-radius: 0.75rem;
+    padding: 0.75rem 1rem;
+    color: #ffffff;
+    cursor: pointer;
+    min-width: 84px;
+}
+
+.vra-ctrl:active {
+    background: rgba(255, 255, 255, 0.18);
+}
+
+.vra-ctrl_end {
+    background: #c23934;
+}
+
+.vra-ctrl_end:active {
+    background: #a12420;
+}
+
+.vra-ctrl-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+}
