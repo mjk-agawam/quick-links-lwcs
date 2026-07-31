@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>61.0</apiVersion>
+    <description>Sends the Scheduler confirmation email when ContactId is first set on a ServiceAppointment, via CaseAppointmentEmailer.</description>
+    <actionCalls>
+        <name>Send_Confirmation_Email</name>
+        <label>Send Confirmation Email</label>
+        <locationX>176</locationX>
+        <locationY>263</locationY>
+        <actionName>CaseAppointmentEmailer</actionName>
+        <actionType>apex</actionType>
+        <inputParameters>
+            <name>serviceAppointmentId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <interviewLabel>SA_SendConfirmationEmail {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>SA: Send Confirmation Email</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Send_Confirmation_Email</targetReference>
+        </connector>
+        <filterFormula>NOT(ISBLANK({!$Record.ContactId})) &amp;&amp; ISBLANK({!$Record__Prior.ContactId})</filterFormula>
+        <object>ServiceAppointment</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

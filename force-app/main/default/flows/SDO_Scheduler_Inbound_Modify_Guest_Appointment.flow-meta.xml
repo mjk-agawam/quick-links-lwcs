@@ -411,6 +411,57 @@
                 </rightValue>
             </conditions>
             <connector>
+                <targetReference>find_Contact</targetReference>
+            </connector>
+            <label>No</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Contact_Found_and_confirmed</name>
+        <label>Contact Found and confirmed?</label>
+        <locationX>564</locationX>
+        <locationY>643</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>ContactYes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>find_Contact</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>formulaContactPhoneMatches</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>find_Assigned_Resource_Name</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+        <rules>
+            <name>ContactNo</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>find_Contact</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>formulaContactPhoneMatches</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
                 <targetReference>Appointment_not_found</targetReference>
             </connector>
             <label>No</label>
@@ -590,13 +641,13 @@
             <label>Yes</label>
         </rules>
         <rules>
-            <name>SANo</name>
-            <conditionLogic>or</conditionLogic>
+            <name>SAContact</name>
+            <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>find_existing_SA</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
-                    <booleanValue>true</booleanValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
@@ -604,6 +655,21 @@
                 <operator>NotEqualTo</operator>
                 <rightValue>
                     <stringValue>Lead</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>find_Contact</targetReference>
+            </connector>
+            <label>Not a Lead</label>
+        </rules>
+        <rules>
+            <name>SANo</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>find_existing_SA</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -626,11 +692,29 @@
       substitute({!Enter_your_phone_number},&quot;-&quot;,&quot;&quot;)
     , &quot; &quot;, &quot;&quot;)
   ,&quot;(&quot;,&quot;&quot;)
- ,&quot;)&quot;,&quot;&quot;) == 
+ ,&quot;)&quot;,&quot;&quot;) ==
 substitute(
   substitute(
     substitute(
       substitute({!find_Lead.Phone},&quot;-&quot;,&quot;&quot;)
+    , &quot; &quot;, &quot;&quot;)
+  ,&quot;(&quot;,&quot;&quot;)
+ ,&quot;)&quot;,&quot;&quot;)</expression>
+    </formulas>
+    <formulas>
+        <name>formulaContactPhoneMatches</name>
+        <dataType>Boolean</dataType>
+        <expression>substitute(
+  substitute(
+    substitute(
+      substitute({!Enter_your_phone_number},&quot;-&quot;,&quot;&quot;)
+    , &quot; &quot;, &quot;&quot;)
+  ,&quot;(&quot;,&quot;&quot;)
+ ,&quot;)&quot;,&quot;&quot;) ==
+substitute(
+  substitute(
+    substitute(
+      substitute({!find_Contact.Phone},&quot;-&quot;,&quot;&quot;)
     , &quot; &quot;, &quot;&quot;)
   ,&quot;(&quot;,&quot;&quot;)
  ,&quot;)&quot;,&quot;&quot;)</expression>
@@ -788,6 +872,27 @@ substitute(
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>ServiceAppointment</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>AppointmentNumber</queriedFields>
+        <queriedFields>ParentRecordId</queriedFields>
+        <queriedFields>ParentRecordType</queriedFields>
+        <queriedFields>ContactId</queriedFields>
+        <queriedFields>ServiceTerritoryId</queriedFields>
+        <queriedFields>WorkTypeId</queriedFields>
+        <queriedFields>AdditionalInformation</queriedFields>
+        <queriedFields>AppointmentType</queriedFields>
+        <queriedFields>Comments</queriedFields>
+        <queriedFields>City</queriedFields>
+        <queriedFields>Country</queriedFields>
+        <queriedFields>PostalCode</queriedFields>
+        <queriedFields>State</queriedFields>
+        <queriedFields>Street</queriedFields>
+        <queriedFields>SchedEndTime</queriedFields>
+        <queriedFields>SchedStartTime</queriedFields>
+        <queriedFields>Description</queriedFields>
+        <queriedFields>Subject</queriedFields>
+        <queriedFields>Phone</queriedFields>
+        <queriedFields>IsAnonymousBooking</queriedFields>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
@@ -833,6 +938,30 @@ substitute(
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Lead</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>find_Contact</name>
+        <label>find Contact</label>
+        <locationX>457</locationX>
+        <locationY>513</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Contact_Found_and_confirmed</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>find_existing_SA.ContactId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Contact</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Phone</queriedFields>
+        <queriedFields>Name</queriedFields>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
