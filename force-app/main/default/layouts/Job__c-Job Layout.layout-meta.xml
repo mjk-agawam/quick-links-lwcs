@@ -46,7 +46,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Venue__c</field>
+                <field>Venue_Lookup__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
-    <excludeButtons>OpenSlackRecordChannel</excludeButtons>
     <layoutSections>
         <customLabel>false</customLabel>
         <detailHeading>true</detailHeading>
@@ -53,7 +52,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Asset__c</field>
+                <field>AppointmentCategoryId</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -76,6 +75,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Address</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Venue__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
@@ -229,7 +232,11 @@
         <layoutColumns/>
         <style>CustomLinks</style>
     </layoutSections>
-    <quickActionList/>
+    <quickActionList>
+        <quickActionListItems>
+            <quickActionName>Flow._ModifyAppointment</quickActionName>
+        </quickActionListItems>
+    </quickActionList>
     <relatedLists>
         <fields>TASK.SUBJECT</fields>
         <fields>TASK.WHO_NAME</fields>
@@ -284,7 +291,6 @@
         <fields>Name</fields>
         <fields>CreatedBy</fields>
         <fields>CreatedDate</fields>
-        <fields>Label</fields>
         <fields>Status</fields>
         <relatedList>ServiceReportRelatedList</relatedList>
     </relatedLists>
@@ -302,13 +308,31 @@
         <fields>LatestEndTime</fields>
         <relatedList>BundledServiceAppointments</relatedList>
     </relatedLists>
+    <relatedLists>
+        <fields>Name</fields>
+        <fields>OWNER_NAME</fields>
+        <fields>Status</fields>
+        <fields>CollaborationUrl</fields>
+        <fields>StartedDateTime</fields>
+        <fields>EndedDateTime</fields>
+        <relatedList>Swarm</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>Name</fields>
+        <fields>OWNER_NAME</fields>
+        <fields>Status</fields>
+        <fields>CreatedDate</fields>
+        <fields>AssignedDateTime</fields>
+        <fields>CompletedDateTime</fields>
+        <relatedList>SwarmMember</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>Name</fields>
+        <fields>StartDateTime</fields>
+        <fields>Owner</fields>
+        <relatedList>VideoCalls</relatedList>
+    </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
-    <summaryLayout>
-        <masterLabel>00ha5000005pkrg</masterLabel>
-        <sizeX>4</sizeX>
-        <sizeY>0</sizeY>
-        <summaryLayoutStyle>Default</summaryLayoutStyle>
-    </summaryLayout>
 </Layout>
