@@ -50,6 +50,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Daily_Crew_Rate__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Estimated_Crew_Cost__c</field>
             </layoutItems>
             <layoutItems>
