@@ -16,6 +16,7 @@
         <displayFormat>JOB-{0000}</displayFormat>
     </nameField>
     <pluralLabel>Jobs</pluralLabel>
+    <compactLayoutAssignment>Job_Compact</compactLayoutAssignment>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
 </CustomObject>
