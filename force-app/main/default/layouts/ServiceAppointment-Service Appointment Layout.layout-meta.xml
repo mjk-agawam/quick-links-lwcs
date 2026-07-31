@@ -278,6 +278,8 @@
     </relatedLists>
     <relatedLists>
         <fields>ServiceResource</fields>
+        <fields>Role</fields>
+        <fields>Acceptance_Status__c</fields>
         <fields>Event</fields>
         <relatedList>AssignedResources</relatedList>
     </relatedLists>
