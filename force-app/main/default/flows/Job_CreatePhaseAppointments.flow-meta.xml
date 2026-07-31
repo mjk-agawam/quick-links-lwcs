@@ -61,7 +61,7 @@
             <field>Name</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>Advisory Session</stringValue>
+                <stringValue>Show Day - Event Support</stringValue>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>

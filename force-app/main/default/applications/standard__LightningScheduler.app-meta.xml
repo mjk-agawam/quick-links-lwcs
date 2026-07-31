@@ -15,5 +15,7 @@
     <tabs>standard-OperatingHours</tabs>
     <tabs>standard-ServiceAppointment</tabs>
     <tabs>Job__c</tabs>
+    <tabs>Scheduler_Gantt</tabs>
+    <tabs>Crew_Booking</tabs>
     <uiType>Lightning</uiType>
 </CustomApplication>
