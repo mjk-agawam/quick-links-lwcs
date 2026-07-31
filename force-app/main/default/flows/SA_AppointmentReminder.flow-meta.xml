@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>61.0</apiVersion>
+    <description>When a ServiceAppointment is created or updated, schedules a reminder to fire exactly 24 hours before SchedStartTime. Sends a reminder email and mock SMS via SAAppointmentReminderSender.</description>
+    <actionCalls>
+        <name>Send_Reminder</name>
+        <label>Send Reminder</label>
+        <locationX>176</locationX>
+        <locationY>263</locationY>
+        <actionName>SAAppointmentReminderSender</actionName>
+        <actionType>apex</actionType>
+        <inputParameters>
+            <name>serviceAppointmentId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <interviewLabel>SA_AppointmentReminder {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>SA: 24-Hour Appointment Reminder</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <filterFormula>NOT(ISBLANK({!$Record.ContactId})) &amp;&amp; NOT(ISBLANK({!$Record.SchedStartTime})) &amp;&amp; NOT(ISPICKVAL({!$Record.Status}, "Canceled"))</filterFormula>
+        <object>ServiceAppointment</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <scheduledPaths>
+            <name>Reminder_24h_Before</name>
+            <connector>
+                <targetReference>Send_Reminder</targetReference>
+            </connector>
+            <label>24 Hours Before</label>
+            <offsetNumber>-1</offsetNumber>
+            <offsetUnit>Days</offsetUnit>
+            <recordField>SchedStartTime</recordField>
+            <timeSource>RecordField</timeSource>
+        </scheduledPaths>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>
